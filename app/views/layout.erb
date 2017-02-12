@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/application.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/js/application.js"></script>
+    <title>Destruct app</title>
+  </head>
+  <body>
+    <div id="content">
+      <% if flash[:notice] %>
+        <p class="alert alert-success"><%= flash[:notice] %>
+      <% end %>
+      <% if flash[:error] %>
+        <div class="alert alert-error">
+          <% flash[:error].full_messages.each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>
