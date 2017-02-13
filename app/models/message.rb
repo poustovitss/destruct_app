@@ -4,8 +4,7 @@ class Message < ActiveRecord::Base
                                    allow_nil: true
   validates :ttl, numericality: { greater_than_or_equal_to: 1,
                                   less_then: 10**10-1,
-                                  only_integer: true },
-                  allow_nil: true
+                                  only_integer: true }
   validates :init_views, numericality: { greater_than_or_equal_to: 1,
                                          less_then: 10**10-1,
                                          only_integer: true }
@@ -15,8 +14,9 @@ class Message < ActiveRecord::Base
 
 
   def is_expired?
-    value = ( Time.now - self.created_at ) <=> self.ttl
-    if value == 1
+    time = ( Time.now - self.created_at ) <=> self.ttl
+    view = true if self.init_views == self.viewed
+    if time == 1 || view
       set_nil_content
       true
     else
