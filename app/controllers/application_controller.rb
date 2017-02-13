@@ -13,5 +13,6 @@ end
 
 get '/message/:id' do
   @message = Message.find(params[:id])
+  @message.add_view
   erb :message_view
 end
