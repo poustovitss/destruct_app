@@ -5,7 +5,7 @@ end
 post '/messages' do
   @message = Message.new(params[:message])
   if @message.save
-    redirect "/message/#{@message.id}", flash[:notice] = 'Congrats! You message was created!'
+    redirect "/message/#{@message.id}", flash[:notice] = 'Message was created!'
   else
     redirect '/', flash[:error] = @message.errors
   end
