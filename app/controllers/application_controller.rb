@@ -8,17 +8,18 @@ post '/messages' do
 
   @message = Message.new(message)
   if @message.save
-    redirect "/message/#{@message.id}", flash[:notice] = 'Message was created!'
+    redirect "/message/#{@message.unique_hash}",
+             flash[:notice] = 'Message was created!'
   else
     redirect '/', flash[:error] = @message.errors
   end
 end
 
-get '/message/:id' do
-  @message = Message.find(params[:id])
+get '/message/:unique_hash' do
+  @message = Message.where(unique_hash: params[:unique_hash]).first
   if @message.is_expired?
-    erb :message_expired #'set nil to content field but not delete'
-  elsif
+    erb :message_expired
+  else
     @message.increase_view
     erb :message_view
   end

@@ -11,11 +11,12 @@ class Message < ActiveRecord::Base
 
 
   before_create :set_init_viewed
+  after_create  :set_unique_hash
 
 
   def is_expired?
-    time = ( Time.now - self.created_at ) <=> self.ttl
-    view = true if self.init_views == self.viewed
+    time = ( Time.now.utc - self.created_at ) <=> self.ttl
+    view = self.init_views == self.viewed ? true : false
     if time == 1 || view
       set_nil_content
       true
@@ -41,5 +42,10 @@ class Message < ActiveRecord::Base
 
   def set_init_viewed
     self.viewed = -1
+  end
+
+  def set_unique_hash
+    self.unique_hash = Digest::SHA1.hexdigest(self.id.to_s)
+    save!
   end
 end
