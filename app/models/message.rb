@@ -18,7 +18,6 @@ class Message < ActiveRecord::Base
     time = ( Time.now.utc - self.created_at ) <=> self.ttl
     view = self.init_views == self.viewed ? true : false
     if time == 1 || view
-      set_nil_content
       true
     else
       false
@@ -26,11 +25,6 @@ class Message < ActiveRecord::Base
   end
 
   def increase_view
-    increment
-  end
-
-  protected
-  def increment
     self.viewed += 1
     save!
   end
