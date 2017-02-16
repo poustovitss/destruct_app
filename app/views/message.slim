@@ -1,0 +1,21 @@
+.page-header
+  h1 Create message:
+form#message_form action="/messages" method="post" role="form"
+  .form-group
+    label for="message_content" Content:
+    input#message_content.form-control type="text" value="" /
+    input#encrypted_message name="message[content]" type="hidden" value="" /
+  .form-group
+    label for="ttl" Time to live (in hours):
+    input#ttl.form-control name="message[ttl]" /
+  .form-group
+    label for="init_views" Number of views:
+    input#init_views.form-control name="message[init_views]" /
+  .checkbox
+    label
+      input#has_password checked="checked" name="message[has_password]" type="checkbox" value="true" /
+      | Protect with password?
+  #user_password_form.form-group
+    label for="password" Secure password:
+    input#password.form-control type="password" /
+  button#message_submit.btn.btn-success type="submit" Create

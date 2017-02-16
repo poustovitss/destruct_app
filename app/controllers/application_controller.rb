@@ -1,5 +1,5 @@
 get '/' do
-  erb :message
+  slim :message
 end
 
 post '/messages' do
@@ -19,9 +19,9 @@ get '/message/:unique_hash' do
   @message = Message.where(unique_hash: params[:unique_hash]).first
   if @message.is_expired?
     @message.set_nil_content
-    erb :message_expired
+    slim :message_expired
   else
     @message.increase_view
-    erb :message_view
+    slim :message_view
   end
 end

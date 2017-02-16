@@ -11,6 +11,7 @@ gem 'activerecord'
 gem 'rake'
 gem 'shotgun'
 gem 'tux'
+gem 'slim'
 
 group :test do
   gem 'database_cleaner', '~> 1.4.1'
