@@ -3,10 +3,10 @@ class Message < ActiveRecord::Base
                                    length: { minimum: 0 },
                                    allow_blank: true
   validates :ttl, numericality: { greater_than_or_equal_to: 1,
-                                  less_then: 10**10-1,
+                                  less_then: 30*24*60*60,
                                   only_integer: true }
   validates :init_views, numericality: { greater_than_or_equal_to: 1,
-                                         less_then: 10**10-1,
+                                         less_then: 1000,
                                          only_integer: true }
 
 
@@ -15,10 +15,11 @@ class Message < ActiveRecord::Base
 
 
   def is_expired?
-    time = ( Time.now.utc - self.created_at ) > self.ttl
-    view = self.init_views == self.viewed ? true : false
+    ( Time.now.utc - self.created_at ) > self.ttl || self.init_views == self.viewed
+  end
 
-    time || view ? true : false
+  def has_password?
+    self.has_password
   end
 
   def increase_view
@@ -37,11 +38,6 @@ class Message < ActiveRecord::Base
 
   def set_unique_hash
     self.unique_hash = Digest::SHA1.hexdigest(self.id.to_s)
-    save!
-  end
-
-  def set_password
-    self.password = true
     save!
   end
 end
