@@ -1,3 +1,11 @@
-#message_form {
-    width: auto;
+#content {
+    margin: 0 auto;
+    padding: 0 1em;
+    max-width: 37em;
+    position: relative;
+    width: 61.8%;
+}
+
+#decrypted_content {
+    display: none;
 }

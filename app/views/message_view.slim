@@ -5,9 +5,11 @@
   .page-header
     h1 Enter password:
 
-  input#password.form-control type="password"
+  .form-group
+    input#password.form-control type="password" /
   button#decrypt.btn.btn-success type="submit" Show
-  p#decrypted_content
+  .well#decrypted_content
 - else
-  h1 Your message:
-  p = @message.content
+  .page-header
+    h1 Your message:
+  .well = @message.content
