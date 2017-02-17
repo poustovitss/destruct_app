@@ -1,12 +1,10 @@
 class Message < ActiveRecord::Base
-  validates :content, :init_views, presence: true,
-                                   length: { minimum: 0 },
-                                   allow_blank: true
-  validates :ttl, numericality: { greater_than_or_equal_to: 1,
-                                  less_then: 30*24*60*60,
+  validates :content, presence: true
+  validates :ttl, presence: true, numericality: { greater_than_or_equal_to: 1,
+                                  less_than: 30*24*60*60,
                                   only_integer: true }
-  validates :init_views, numericality: { greater_than_or_equal_to: 1,
-                                         less_then: 1000,
+  validates :init_views, presence: true, numericality: { greater_than_or_equal_to: 1,
+                                         less_than: 1000,
                                          only_integer: true }
 
 
@@ -28,10 +26,11 @@ class Message < ActiveRecord::Base
   end
 
   def set_nil_content
-    self.content = nil
+    self.content = 'none'
     save!
   end
 
+  protected
   def set_init_viewed
     self.viewed = -1
   end
