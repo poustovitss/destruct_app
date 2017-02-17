@@ -13,4 +13,8 @@ FactoryGirl.define do
       has_password true
     end
   end
+
+  factory :invalid_message, parent: :message do
+    ttl nil
+  end
 end
